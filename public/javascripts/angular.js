@@ -3,7 +3,7 @@ angular.module('app',[])
 		$sceProvider.enabled(false);
 	})
 	.controller('main', ['$scope','$http', function($scope, $http){
-		$http.get('/devices')
+		$http.get('http://ec2.mrostudios.com:3000/devices')
 			.then(function(response){
 				$scope.devices = response.data;
 			});
