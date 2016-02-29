@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GPS Tracking</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+</head>
+<body ng-app="app">
+	<div ng-controller="main">
+		<h1>Hello!</h1>
+		<p>Welcome to NodeJS</p>	
+
+		<div ng-repeat="(deviceId, device) in devices">
+			<p>{{deviceId}}</p>
+      <p>last known location</p>
+      <p>last checkin: {{device.lastLocation.time}}</p>
+      <iframe width="600" height="600" ng-src="{{getMapLink(device)}}"></iframe>
+    </div>
+  </div>
+  <script type="text/javascript" src="/javascripts/angular.js"></script>
+</body>
+</html>
