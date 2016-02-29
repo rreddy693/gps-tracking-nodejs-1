@@ -9,12 +9,6 @@ angular.module('app',[])
 		$http.get('http://ec2.mrostudios.com:3000/devices')
 			.then(function(response){
 				$scope.devices = response.data;
-				for(d in $scope.devices){
-					$scope.devices[d].locations.forEach(function(l){
-						l.lat /= 60;
-						l.lon /= 60;
-					});
-				}
 			});
 
 		$scope.getIFrameLink = function(location){

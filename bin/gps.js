@@ -60,15 +60,17 @@ function locationData(data) {
     var lengthOfGPSInformation = (gpsInfoSat[0] & 0xf0) >> 4;
     var gpsSatellites = gpsInfoSat[0] & 0x0f;
     lat = ((lat[0] << 24) | (lat[1] << 16) | (lat[2] << 8) | lat[3]) / 30000.0;
+    lat /= 60;
     lon = ((lon[0] << 24) | (lon[1] << 16) | (lon[2] << 8) | lon[3]) / 30000.0;
+    lon /= 60;
     var speed = speed;
 
 
     console.log('time: ' + time.toString());
     console.log('gps sattelites: ' + gpsSatellites);
 
-    console.log('latitude: ' + Math.floor(lat / 60) + ' ' + (lat % 60));
-    console.log('longitude: ' + Math.floor(lon / 60) + ' ' + (lon % 60));
+    console.log('latitude: ' + lat);
+    console.log('longitude: ' + lon);
 
     console.log('speed: ' + speed[0]);
 
