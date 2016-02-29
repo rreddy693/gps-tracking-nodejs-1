@@ -178,7 +178,7 @@ function gateway(socket, data) {
 			return;
 		case 0x12:
             console.log('------------location ping------------');
-			socket.device.lastLocation = locationData(packetData);
+			socket.device.addLocation(locationData(packetData));
             return;
         case 0x13:
             console.log('------------heart beat------------');
@@ -188,7 +188,7 @@ function gateway(socket, data) {
         case 0x16:
             console.log('------------status packet------------');
             var statusMsg = statusPacket(packetData);
-            socket.device.lastLocation = statusMsg.location;
+            socket.device.addLocation(statusMsg.location);
             socket.device.status = statusMsg.status;
 
             socket.write(getResponse(messageSerialNumber));
@@ -202,8 +202,7 @@ exports.startServer = function(port){
     console.log('GPS server started at ' + port);
 
     var server = net.createServer(function(socket) {
-        socket.setEncoding('hex');
-        socket.device = {};
+        socket.setEncoding('hex');        
 
         socket.on('data', function(data) {
             console.log(data);        
