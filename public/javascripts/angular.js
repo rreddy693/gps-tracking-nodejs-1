@@ -9,6 +9,10 @@ angular.module('app',[])
 		$http.get('http://ec2.mrostudios.com:3000/devices')
 			.then(function(response){
 				$scope.devices = response.data;
+				for(deviceId in $scope.devices){
+					var device = $scope.devices[deviceId];
+					device.locations.forEach(function (d){ d.time = new Date(d.time); });
+				}
 			});
 
 		$scope.getIFrameLink = function(location){
