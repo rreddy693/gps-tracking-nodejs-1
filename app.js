@@ -33,6 +33,7 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bower', express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', routes);
 app.use('/users', users);

@@ -1,31 +1,33 @@
-angular.module('app',[])
-	.run(function($rootScope){
+angular.module('app', [])
+	.run(function($rootScope) {
 		$rootScope._ = _;
 	})
-	.config(function($sceProvider){
+	.config(function($sceProvider) {
 		$sceProvider.enabled(false);
 	})
-	.controller('main', ['$scope','$http', function($scope, $http){
+	.controller('main', ['$scope', '$http', function($scope, $http) {
 		$http.get('http://ec2.mrostudios.com:3000/devices')
-			.then(function(response){
+			.then(function(response) {
 				$scope.devices = response.data;
-				for(deviceId in $scope.devices){
+				for (deviceId in $scope.devices) {
 					var device = $scope.devices[deviceId];
-					device.locations.forEach(function (d){ d.time = new Date(d.time); });
+					device.locations.forEach(function(d) {
+						d.time = moment(d.time).format("DD.MM.YYYY HH:mm:ss");
+					});
 				}
 			});
 
-		$scope.getIFrameLink = function(location){
+		$scope.getIFrameLink = function(location) {
 			return "https://www.google.com/maps/embed/v1/place?\
 						key=AIzaSyBJwFspRfvFCumitTo7RD-2yrjjMUyV4eg\
-						&q="+location.lat+","+location.lon+"\
+						&q=" + location.lat + "," + location.lon + "\
 						&zoom=18";
 		};
 
-		$scope.getMapLink = function(location){
+		$scope.getMapLink = function(location) {
 			return "https://maps.google.com/maps/place/\
-						"+location.lat+" "+location.lon+"\
-						/@"+location.lat+","+location.lon+",18z";
-						
+						" + location.lat + " " + location.lon + "\
+						/@" + location.lat + "," + location.lon + ",18z";
+
 		};
 	}]);
