@@ -28,9 +28,9 @@ function loginMessage(data) {
     };	
 }
 
-function getResponse(serialNumber) {
+function getResponse(dataType, serialNumber) {
 	var start = new Buffer([0x78, 0x78]);
-	var data = new Buffer([0x05, 0x01, serialNumber[0], serialNumber[1]]);
+	var data = new Buffer([0x05, dataType, serialNumber[0], serialNumber[1]]);
 	var errorCheck = getCRC(data);
 	var end = new Buffer([0x0d, 0x0a]);
 
@@ -176,7 +176,7 @@ function gateway(socket, data) {
             var loginMsg = loginMessage(packetData);
             socket.device = devices.addDevice(loginMsg.terminalId);
 
-			socket.write(getResponse(messageSerialNumber));
+			socket.write(getResponse(dataType, messageSerialNumber));
 			return;
 		case 0x12:
             console.log('------------location ping------------');
@@ -185,7 +185,7 @@ function gateway(socket, data) {
         case 0x13:
             console.log('------------heart beat------------');
             socket.device.status = pingPacket(packetData);
-            socket.write(getResponse(messageSerialNumber));
+            socket.write(getResponse(dataType, messageSerialNumber));
 			return;
         case 0x16:
             console.log('------------status packet------------');
@@ -193,7 +193,7 @@ function gateway(socket, data) {
             socket.device.addLocation(statusMsg.location);            
             socket.device.status = statusMsg.status;
 
-            socket.write(getResponse(messageSerialNumber));
+            socket.write(getResponse(dataType, messageSerialNumber));
             return;
 	}
 
