@@ -208,7 +208,12 @@ exports.startServer = function(port){
 
         socket.on('data', function(data) {
             console.log(data);        
-            gateway(socket, new Buffer(data, 'hex'));
+            try{
+                gateway(socket, new Buffer(data, 'hex'));
+            }catch(e){
+                console.log(e);
+                socket.destroy();                
+            }
         });
     });
     

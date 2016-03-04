@@ -22,7 +22,7 @@
        <div class="row">
         <div class="col-md-6">
           <ul>
-            <li ng-repeat="l in device.locations">{{l.time.toLocaleString()}} - <a ng-href="{{getMapLink(l)}}">open map</a></li>
+            <li ng-repeat="l in device.locations">{{l.time.toLocaleString()}} [satellites: {{l.gpsSatellites}}] - <a ng-href="{{getMapLink(l)}}">open map</a></li>
           </ul>    
         </div>  
         <div class="col-md-6">
