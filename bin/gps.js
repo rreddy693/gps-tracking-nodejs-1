@@ -133,10 +133,10 @@ function getStatusInformation(data){
     };
 }
 
-function statusPacket(data){
+function alarmPacket(data){
     var locationMsg = locationData(data.slice(0, 27));
     var i = 27;
-    var statusMsg = getStatusInformation(i, i + 5);   
+    var statusMsg = getStatusInformation(data.slice(i, i + 5));
 
     return {
         location: locationMsg,
@@ -189,8 +189,8 @@ function gateway(socket, data) {
 			return;
         case 0x16:
             console.log('------------status packet------------');
-            var statusMsg = statusPacket(packetData);
-            socket.device.addLocation(statusMsg.location);
+            var statusMsg = alarmPacket(packetData);
+            socket.device.addLocation(statusMsg.location);            
             socket.device.status = statusMsg.status;
 
             socket.write(getResponse(messageSerialNumber));
@@ -219,3 +219,5 @@ exports.startServer = function(port){
     
     server.listen(port);
 };
+
+exports.gateway = gateway;
