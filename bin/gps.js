@@ -148,6 +148,19 @@ function pingPacket(data){
     return getStatusInformation(data.slice(0, 5));    
 }
 
+function sendCommand(command){
+    var commandData = new Buffer(command, 'ascii');
+    var packetLength = 5 + commandData.length + 4;
+
+    var header = new Buffer([0x78, 0x78]);
+    var serialNumber = new Buffer([0xbe, 0xef]);
+    var data = Buffer.concat([new Buffer(packetLength, 0x80, commandData.length + 4, 0x00, 0x01, 0x02, 0x03]), commandData, new Buffer([0x00, 0x02]), serialNumber]);
+    var errorCheck = getCRC(data);
+    var end = new Buffer([0x0d, 0x0a]);
+
+    var command = Buffer.concat([header, data, errorCheck, end]);
+}
+
 function gateway(socket, data) {
 	if (data[0] != 0x78 || data[1] != 0x78) throw 'not GT06 protocol, wrong startBit';
 	var packetDataLength = data[2] - 1 - 2 - 2; //leave out dataType and errorCheck and serialNumber
