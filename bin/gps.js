@@ -102,13 +102,13 @@ function getStatusInformation(data){
     var activated = (terminalInformationContent[0] & 0x01) == 0x01;
 
     var alarm = '';
-    if((alarmData[0] & 0x10) == 0x10) alarm = 'SOS';
-    if((alarmData[0] & 0x20) == 0x20) alarm = 'Power cut alarm';
-    if((alarmData[0] & 0x30) == 0x30) alarm = 'Shock alarm';
-    if((alarmData[0] & 0x40) == 0x40) alarm = 'Fence in alarm';
-    if((alarmData[0] & 0x50) == 0x50) alarm = 'Fence out alarm';
+    if((alarmData[0] & 0x01) == 0x01) alarm = 'SOS';
+    if((alarmData[0] & 0x02) == 0x02) alarm = 'Power cut alarm';
+    if((alarmData[0] & 0x03) == 0x03) alarm = 'Shock alarm';
+    if((alarmData[0] & 0x04) == 0x04) alarm = 'Fence in alarm';
+    if((alarmData[0] & 0x05) == 0x05) alarm = 'Fence out alarm';
     var alarmLanguage = '';
-    if((alarmData[1] & 0x02) == 0x02) alarmLanguage = 'chinese';
+    if((alarmData[1] & 0x01) == 0x01) alarmLanguage = 'chinese';
     if((alarmData[1] & 0x02) == 0x02) alarmLanguage = 'english';
 
 
