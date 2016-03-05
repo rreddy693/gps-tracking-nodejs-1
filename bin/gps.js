@@ -154,7 +154,7 @@ function sendCommand(command){
 
     var header = new Buffer([0x78, 0x78]);
     var serialNumber = new Buffer([0xbe, 0xef]);
-    var data = Buffer.concat([new Buffer(packetLength, 0x80, commandData.length + 4, 0x00, 0x01, 0x02, 0x03]), commandData, new Buffer([0x00, 0x02]), serialNumber]);
+    var data = Buffer.concat([new Buffer([packetLength, 0x80, commandData.length + 4, 0x00, 0x01, 0x02, 0x03]), commandData, new Buffer([0x00, 0x02]), serialNumber]);
     var errorCheck = getCRC(data);
     var end = new Buffer([0x0d, 0x0a]);
 
